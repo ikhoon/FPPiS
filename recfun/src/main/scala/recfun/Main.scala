@@ -1,6 +1,8 @@
 package recfun
 import common._
 
+import scala.swing.event.WindowOpened
+
 object Main {
   def main(args: Array[String]) {
     println("Pascal's Triangle")
@@ -32,14 +34,33 @@ object Main {
     case (0, 0) => 1
     case (0, _) => 1
     case (_, _) if c == r => 1
-    case (column, row) => pascal(column - 1, row - 1) + pascal(column, row - 1)
+    case (col, row) => pascal(col - 1, row - 1) + pascal(col, row - 1)
   }
 
 
   /**
    * Exercise 2
+   * chars = "just((a)()) parentheses"
+   * if opened < 0
+   *   opened
+   * else
+   *   opened++ if chars.head == "("
+   *   opened-- if chars.head == ")"
+   *   
+   *
    */
-  def balance(chars: List[Char]): Boolean = ???
+  def balance(chars: List[Char]): Boolean = {
+    def inspect(opened: Int, chars: List[Char]) : Int =
+      if (opened < 0) opened
+      else
+        chars match {
+          case '(' :: rest => inspect(opened + 1, rest)
+          case ')' :: rest => inspect(opened - 1, rest)
+          case _ :: rest => inspect(opened, rest)
+          case _ => opened
+        }
+      inspect(0, chars) == 0
+  }
 
   /**
    * Exercise 3

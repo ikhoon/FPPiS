@@ -21,12 +21,11 @@ object Main {
    * pascal(0, 2) = pascal(0, 2 - 1) = pascal(0, 1 - 1) = 1
    * pascal(1, 2) = pascal(1 - 1, 2 - 1) + pascal(1, 2 - 1) = 1 + 1
    *
-   * generalize
    * base condition
    * pascal(0, 0) => 1
    * pascal(0, r) => 1
    * pascal(r, r) => 1
-   * normalize
+   * generalize
    * pascal(c, r) => pascal(c - 1, r - 1) + pascal(c, r - 1)
    * c
    */
@@ -46,7 +45,7 @@ object Main {
    * else
    *   opened++ if chars.head == "("
    *   opened-- if chars.head == ")"
-   *   
+   *   opened if chars.head is not parentheses
    *
    */
   def balance(chars: List[Char]): Boolean = {
@@ -64,6 +63,26 @@ object Main {
 
   /**
    * Exercise 3
+   * base case
+   * countChange(0, coins) => 0
+   * countChange(money, Nil) => 0
+   *
+   * base case
+   * count(0, coins) => 1
+   * count(-money, coins) => 0
+   * generalize
+   * count(money, coins) => count(money - coins.head, coins) + count(money - coins.tail.head, coins.tail)
    */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = {
+    if(money < 0 || coins.isEmpty) 0
+    def count(money: Int, coins: List[Int]): Int = {
+      (money, coins) match {
+        case (0, _) => 1
+        case (m, _) if m < 0 => 0
+        case (_, c :: Nil) => count(money - c, coins)
+        case (_, c :: cs) => count(money - c, coins) + count(money, cs)
+      }
+    }
+    count(money, coins)
+  }
 }

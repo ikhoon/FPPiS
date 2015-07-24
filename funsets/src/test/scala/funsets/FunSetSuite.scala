@@ -193,11 +193,11 @@ class FunSetSuite extends FunSuite {
     }
   }
 
-  test("forall of all with out bound given sets") {
+  test("forall of all with upper bound given sets") {
     new TestSets {
       val s = union(union(union(union(s1, s2), s3), s1001), `s-1001`)
       assert(forall(s, _ < 10), "forall 4")
-      assert(forall(s, _ > 1), "forall 1")
+      assert(!forall(s, _ > 1), "forall 1")
     }
   }
 
@@ -211,13 +211,38 @@ class FunSetSuite extends FunSuite {
     }
   }
 
-  test("exists of all with out bound given sets") {
+  test("exists of all with upper bound given sets") {
     new TestSets {
       val s = union(union(union(union(s1, s2), s3), s1001), `s-1001`)
       assert(exists(s, _ < 2), "exists 2")
       assert(exists(s, _ < 3), "exists 3")
       assert(exists(s, _ < 4), "exists 4")
       assert(!exists(s, _ > 4), "exists 4")
+    }
+  }
+
+  test("map of all in bound given sets") {
+    new TestSets {
+      val s = union(union(s1, s2), s3)
+      val f = (x: Int) => x * 10
+
+      assert(contains(map(s, f), 10), "map 10")
+      assert(contains(map(s, f), 20), "map 20")
+      assert(contains(map(s, f), 30), "map 30")
+      assert(!contains(map(s, f), 40), "map 40")
+    }
+  }
+
+  test("map of all with upper bound given sets") {
+    new TestSets {
+      val s = union(union(union(union(s1, s2), s3), s1001), `s-1001`)
+      val f = (x: Int) => x * 11
+
+      assert(contains(map(s, f), 11), "map 11")
+      assert(contains(map(s, f), 22), "map 22")
+      assert(!contains(map(s, f), 44), "map 44")
+      assert(!contains(map(s, f), 4004), "map 4004")
+      assert(!contains(map(s, f), -1000), "map -1000")
     }
   }
 }

@@ -69,7 +69,8 @@ object FunSets {
   /**
    * Returns whether there exists a bounded integer within `s`
    * that satisfies `p`.
-   */
+   * using iterate
+
   def exists(s: Set, p: Int => Boolean): Boolean = {
     def iter(a: Int): Boolean = {
       if (a < -bound) false
@@ -77,13 +78,40 @@ object FunSets {
       else iter(a - 1)
     }
     iter(bound)
-
   }
+  */
+  /**
+    * Returns whether there exists a bounded integer within `s`
+    * that satisfies `p`.
+    * set = (1, 2, 3)
+    * exists(set, _ > 2) == true [3 is bigger than 2] `equals` forall(set, !(_ > 2)) == false [3 is not less or equal than 2]
+    * using forall, exists(s, p)
+    * - some values in set satisfy the predicate(p) `equals` all values in set does not satisfy negative predicate(!p),
+    * - exists(s, p) == true `equals` forall(s, !p) == false
+    * - exists(s, p) == !forall(s, !p)
+    * 어떤 조건을 만족하는 일부의 값이 있으면 모든 값이 그 조건을 만족하지 않는것이 아니다.
+    * 어떤 조건을 만족하는 값이 없으면 모든값이 그 조건을 만족하지 않는다.
+    */
+  def exists(s: Set, p: Int => Boolean): Boolean = !forall(s, !p(_))
 
   /**
+   * s1 = singletonSet(1)
+   * f = x => x + 1
+   * contains(map(s, f), 2)
+   *
+   * map(s1, f) => map(x => x == 1, y => y + 1) => ??? => x => x == 2
+   * iterate all inner bounded values
+   *
    * Returns a set transformed by applying `f` to each element of `s`.
    */
-  def map(s: Set, f: Int => Int): Set = ???
+  def map(s: Set, f: Int => Int): Set = {
+    def iter(a : Int): Set = {
+      if(a < -bound) x => false
+      else if(contains(s, a)) union(iter(a - 1), singletonSet(f(a)))
+      else iter(a - 1)
+    }
+    iter(bound)
+  }
 
   /**
    * Displays the contents of a set

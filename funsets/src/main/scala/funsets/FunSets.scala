@@ -18,17 +18,23 @@ object FunSets {
   def contains(s: Set, elem: Int): Boolean = s(elem)
 
   /**
+   * singletonSet(4) = x => x == 4
+   * def isEqualTo4()
+   *
    * Returns the set of the one given element.
    */
   def singletonSet(elem: Int): Set = _ == elem
 
   /**
+   * x => x == 2 , x => x == 4, ...
+   * x => x == 2 || x => x == 4
    * Returns the union of the two given sets,
    * the sets of all elements that are in either `s` or `t`.
    */
   def union(s: Set, t: Set): Set = x => s(x) || t(x)
 
   /**
+   * (x => x == 2 || x => x == 4) && (x => x == 5 || x => x == 6)
    * Returns the intersection of the two given sets,
    * the set of all elements that are both in `s` and `t`.
    */
@@ -80,6 +86,7 @@ object FunSets {
     iter(bound)
   }
   */
+
   /**
     * Returns whether there exists a bounded integer within `s`
     * that satisfies `p`.
@@ -91,6 +98,7 @@ object FunSets {
     * - exists(s, p) == !forall(s, !p)
     * 어떤 조건을 만족하는 일부의 값이 있으면 모든 값이 그 조건을 만족하지 않는것이 아니다.
     * 어떤 조건을 만족하는 값이 없으면 모든값이 그 조건을 만족하지 않는다.
+    * p -> q 참이면 대우 ~q -> ~p 참이
     */
   def exists(s: Set, p: Int => Boolean): Boolean = !forall(s, !p(_))
 

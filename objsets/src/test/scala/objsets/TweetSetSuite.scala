@@ -69,4 +69,19 @@ class TweetSetSuite extends FunSuite {
       assert(trends.head.user == "a" || trends.head.user == "b")
     }
   }
+
+  test("descending all: set5") {
+    new TestSets {
+      val trends = set5.descendingByRetweet
+
+      assert(isGreaterEqualThan(trends.head, trends.tail))
+      def isGreaterEqualThan(x: Tweet, ys: TweetList):Boolean = {
+        if(ys.isEmpty) true
+        else {
+          val y = ys.head
+          x.retweets >= y.retweets && isGreaterEqualThan(y, ys.tail)
+        }
+      }
+    }
+  }
 }

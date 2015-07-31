@@ -10,3 +10,6 @@ Source code: [recfun/Main.scala](https://github.com/ikhoon/Functional-Programmin
 
 ### Week 2: Higher Order Functions
 Source code: [funsets/FunSets.scala](https://github.com/ikhoon/Functional-Programming-Principles-in-Scala/blob/master/funsets/src/main/scala/funsets/FunSets.scala)
+
+### Week 3: Object-Oriented Sets
+Source code: [objsets/TweetSet.scala](https://github.com/ikhoon/FPPiS/blob/master/objsets/src/main/scala/objsets/TweetSet.scala)

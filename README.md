@@ -13,3 +13,6 @@ Source code: [funsets/FunSets.scala](https://github.com/ikhoon/Functional-Progra
 
 ### Week 3: Object-Oriented Sets
 Source code: [objsets/TweetSet.scala](https://github.com/ikhoon/FPPiS/blob/master/objsets/src/main/scala/objsets/TweetSet.scala)
+
+### Week 4: Huffman Coding
+Source code: [patmat/Huffman.scala](https://github.com/ikhoon/FPPiS/blob/master/patmat/src/main/scala/patmat/Huffman.scala)

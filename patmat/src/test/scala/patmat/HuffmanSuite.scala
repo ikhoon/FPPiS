@@ -49,9 +49,41 @@ class HuffmanSuite extends FunSuite {
                                       Leaf('y', 8)))
   }
 
-  test("decode and encode a very short text should be identity") {
+  test("decode secret frenchCode") {
+    println(decodedSecret)
+  }
+
+
+  test("decode encode secret frenchCode") {
+    assert(encode(frenchCode)(decode(frenchCode, secret)) === secret)
+  }
+  test("decode and encode a very short text t1 should be identity") {
     new TestTrees {
       assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
     }
   }
+
+  test("decode and encode a very short text t2 should be identity") {
+    new TestTrees {
+      assert(decode(t2, encode(t2)("abd".toList)) === "abd".toList)
+    }
+  }
+
+  test("decode and encode a short tex should be identity") {
+    val t3 = Fork(Fork(Leaf('e',1),Leaf('t',2),List('e', 't'),3),
+                  Leaf('x',4), List('e', 't', 'x'), 7)
+    assert(decode(t3, encode(t3)("texttext".toList)) === "texttext".toList)
+
+  }
+
+  test("decode and quickEncode a very short text t2 should be identity") {
+    new TestTrees {
+      assert(decode(t2, quickEncode(t2)("abd".toList)) === "abd".toList)
+    }
+  }
+
+  test("decode quickEncode secret frenchCode") {
+    assert(quickEncode(frenchCode)(decode(frenchCode, secret)) === secret)
+  }
+
 }

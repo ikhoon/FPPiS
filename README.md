@@ -16,3 +16,8 @@ Source code: [objsets/TweetSet.scala](https://github.com/ikhoon/FPPiS/blob/maste
 
 ### Week 4: Huffman Coding
 Source code: [patmat/Huffman.scala](https://github.com/ikhoon/FPPiS/blob/master/patmat/src/main/scala/patmat/Huffman.scala)
+
+### Week 5: No assignment
+
+### Week 6: Anagrams
+Source code: [forcomp/Anagrams.scala](https://github.com/ikhoon/FPPiS/blob/master/forcomp/src/main/scala/forcomp/Anagrams.scala)

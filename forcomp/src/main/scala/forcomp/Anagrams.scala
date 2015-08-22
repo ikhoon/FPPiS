@@ -5,6 +5,7 @@ import java.io.Serializable
 import common._
 
 import scala.collection.immutable.IndexedSeq
+import scala.collection.mutable
 
 
 object Anagrams {
@@ -107,7 +108,20 @@ object Anagrams {
    *  and has no zero-entries.
    */
   def subtract(x: Occurrences, y: Occurrences): Occurrences = {
-    ???
+    val subSetX = combinations(x)
+    if(subSetX.contains(y)) {
+      val yMap: Map[Char, Int] = y.toMap
+      x.toMap.foldLeft(Map[Char, Int]()) {
+        case (acc, elem@(char, xc)) =>
+          yMap.get(char) match {
+            case Some(yc) if xc <  yc => acc + elem
+            case Some(yc) if xc == yc => acc
+            case Some(yc) if xc >  yc => acc + (char -> (xc - yc))
+            case None => acc + elem
+          }
+      }.toList.sortBy(_._1)
+    }
+    else x
   }
 
   /** Returns a list of all anagram sentences of the given sentence.
@@ -150,6 +164,15 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
+    def findAnagrams(occurrences: Occurrences, acc: Sentence): List[Sentence] =
+      if (occurrences.isEmpty) List(acc)
+      else for {
+        subSet <- combinations(occurrences)
+        word <- dictionaryByOccurrences.getOrElse(subSet, List[Word]())
+        sent <- findAnagrams(subtract(occurrences, subSet), word :: acc)
+      } yield sent
 
+    findAnagrams(sentenceOccurrences(sentence), List[Word]())
+  }
 }

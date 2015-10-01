@@ -170,9 +170,8 @@ object Anagrams {
       else for {
         subSet <- combinations(occurrences)
         word <- dictionaryByOccurrences.getOrElse(subSet, List[Word]())
-        sent <- findAnagrams(subtract(occurrences, subSet), word :: acc)
-      } yield sent
-
+        anagram <- findAnagrams(subtract(occurrences, subSet), word :: acc)
+      } yield anagram
     findAnagrams(sentenceOccurrences(sentence), List[Word]())
   }
 }
